@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Süper Lig Fikstürü{% endblock %}
+
+{% block body %}
+    <style>
+        td {
+            line-height: 5px;
+        }
+        a.week {
+            margin-right: 10px;
+            border:1px solid;
+            height: 30px;
+            width: 30px;
+            text-align: center;
+            color: black;
+            margin-bottom: 5px;
+        }
+        .week + .active{
+            border: 2px solid green;
+            color: green;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            {% if fixture is defined %}
+                {% for week, games in fixture %}
+                    {% for i in 1..34  %}
+                        <a class="week {% if i == week %}active{% endif %}" href="{{ path('fixture', {id: i}) }}">{{ i }}</a>
+                    {% endfor %}
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Hafta {{ week }}</th>
+                            <th scope="col">Ev Sahibi</th>
+                            <th scope="col"></th>
+                            <th scope="col">Deplasman</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for game in games %}
+                            <tr>
+                                <td>20:00</td>
+                                <td>{{ game.homeTeam.name }}</td>
+                                <td>{{ game.homeScore }} - {{ game.awayScore }}</td>
+                                <td>{{ game.awayTeam.name }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="{{ path('play-fixture', {id: week})}}" class="btn btn-info mr-2">Bu Haftayı Simüle Et</a>
+                    {% if week < 34 %}
+                        <a href="{{ path('fixture', {id: week + 1})}}" class="btn btn-danger mr-2">Sonraki Hafta</a>
+                    {% endif %}
+                    {% if week == 34 %}
+                        <a href="{{ path('index')}}" class="btn btn-success">Şampiyonu Öğrenmek İçin Puan Tablosunu Görüntüle</a>
+                    {% else %}
+                        <a href="{{ path('index')}}" class="btn btn-success">Puan Tablosunu Görüntüle</a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

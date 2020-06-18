@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Takımlar{% endblock %}
+
+{% block body %}
+    <style>
+        td {
+          line-height: 5px;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Takım Adı</th>
+                        <th>İşlemler</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for team in teams %}
+                        <tr>
+                            <td>{{ team.name }}</td>
+                            <td>
+                                <a href="{{ path('delete-team', {id: team.id}) }}">Sil</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+                <a href="{{ path('add-team') }}" class="btn btn-info mb-2">Yeni Takım Ekle</a>
+                {% if teams_count == 18 %}
+                    <a href="{{ path('fixture') }}" class="btn btn-success">Fikstür Oluştur</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

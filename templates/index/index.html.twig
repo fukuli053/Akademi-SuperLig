@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Süperlig Puan Tablosu{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        tr{
+            line-height: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+   <div class="container">
+       {% if message_type is defined %}
+           <div class="alert alert-{{ message_type }}" role="alert">
+               {{ message }}
+           </div>
+       {% endif %}
+       {% if teams is defined %}
+           <table class="table table-hover">
+               <thead class="thead-dark">
+               <tr>
+                   <th scope="col">#</th>
+                   <th scope="col">Takım</th>
+                   <th scope="col">OM</th>
+                   <th scope="col">G</th>
+                   <th scope="col">B</th>
+                   <th scope="col">M</th>
+                   <th scope="col">AG</th>
+                   <th scope="col">YG</th>
+                   <th scope="col">A</th>
+                   <th scope="col">P</th>
+               </tr>
+               </thead>
+               <tbody>
+               {% for key, team in teams %}
+                   <tr>
+                       <th scope="row">{{ key + 1 }}</th>
+                       <td>{{ team.name }}</td>
+                       <td>{{ team.played }}</td>
+                       <td>{{ team.won }}</td>
+                       <td>{{ team.drawn }}</td>
+                       <td>{{ team.lost }}</td>
+                       <td>{{ team.goalsFor }}</td>
+                       <td>{{ team.goalsAgainst }}</td>
+                       <td>{{ team.goalDifference }}</td>
+                       <td>{{ team.points}}</td>
+                   </tr>
+               {% endfor %}
+               </tbody>
+           </table>
+       {% endif %}
+   </div>
+
+{% endblock %}
